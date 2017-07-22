@@ -1,6 +1,7 @@
 class Cart
 
-	def initialize
+	def initialize (options = [])
+		@id = options[:id]
 		@orders = []
 	end
 	attr_accessor :orders

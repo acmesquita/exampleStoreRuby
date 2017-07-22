@@ -7,6 +7,9 @@ products = [];
 orders = [];
 carts = [];
 
+
+
+
 =begin
 puts "#### Test 01 ####"
 
