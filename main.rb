@@ -7,7 +7,7 @@ load 'cart.rb'
 
 products = [];
 orders = [];
-carts = [];
+cart = Cart.new
 
 loop do
 
@@ -17,38 +17,69 @@ choose do |menu|
   menu.choice(:client) { 
   	system("clear")
   	choose do |menu|
-	  menu.prompt = "Hello Client, choose an option:"
+	  menu.prompt = "Hello Client, Choose an option:"
 	  menu.choice(:list_products) { system("clear")
 	  								puts "---- List Products ----"
-	  								products.each{|product| puts "#{p.to_s}"}
+	  								products.each{|product| puts "#{product.to_s}"}
 	  								ask "return?" }
-	  menu.choice(:buy) { say("Build...") }
-	  menu.choice(:go_to_your_cart) { say("Build...") }
-	  menu.default = :client
+	  menu.choice(:add_to_cart) { system("clear")
+						  puts "---- List Products ----"
+						  products.each{|product| puts "#{product.to_s}"}
+						  id = ask "Choose your product, informe the id:"
+						  quant = ask "Quantity:"
+						  product = products.select{ |product|  product.id == id}.first
+						  order = Order.new({product: product, quantity:quant})
+						  orders << order
+						  order.id = orders.length
+
+						  cart.add(order)
+						  puts "\n"
+						  cart.show
+
+	  					}
+	  menu.choice(:go_to_your_cart) { system("clear")
+
+	  								cart.show
+	  								puts "Total $#{cart.total_price}"
+
+	  								choose do |menu|
+	  									menu.prompt = "Choose an option:"
+	  									menu.choice(:finalizar){
+	  										system("clear")
+	  										puts "---- My Cart ----"
+	  										cart.show
+	  										puts "Done!"
+	  										exit
+	  									}
+	  									menu.choice(:return){}
+	  									menu.default = :return
+	  								end
+	  								}
+	  menu.default = :list_products
 	end
   }
   menu.choice(:manager) {
   	system("clear")
   	choose do |menu|
-	  menu.prompt = "Hello Manager, choose an option:"
+	  menu.prompt = "Hello Manager, Choose an option:"
 	  menu.choice(:create_product) { product = Product.create
 	  								 products << product
 	  								 product.id = products.length
 	  							   }
 	  menu.choice(:delete_product) { system("clear")
 	  								 puts "---- List Products ----"
-	  								 products.each{|p| puts "#{p.to_s}"}
-	  								 answer = ask "who id?" 
-	  								 products.delete_if{|product| product.id = answer}
+	  								 products.each{|product| puts "#{product.to_s}"}
+	  								 answer = ask "who id?", Integer
+	  								 products.delete_if{|product| product.id == answer.to_i}
 	  								}
 	  menu.choice(:find_product) {
 	  								system("clear")
-	  								answer = ask "Title?" 
+	  								answer = ask "Find by title" 
 	  								puts "---- List Products ----"
-	  								products.select{ |product|  product.name.include? answer}.each{|p| puts "#{p.to_s}"}
-	  								
+	  								products.select{ |product|  product.title.include? answer}.each{|product| puts "#{product.to_s}"}
+	  								ask "return?"
 	  							 }
-	  menu.default = :find_product
+	  menu.default = :create_product
 	end
   }
   menu.choice(:exit){exit}
@@ -57,9 +88,6 @@ end
 
 end
 
-def client
-	
-end
 
 =begin
 puts "#### Test 01 ####"

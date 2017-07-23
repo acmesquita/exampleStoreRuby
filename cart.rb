@@ -8,6 +8,7 @@ class Cart
 
 	def show
 		@orders.each{|o| puts "#{o.quantity} - #{o.product}"}
+		puts "Total: $#{total_price()}"
 	end
 
 	def add(order)
