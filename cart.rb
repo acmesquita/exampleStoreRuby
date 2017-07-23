@@ -9,7 +9,7 @@ class Cart
 	def show
 		puts "---- My Cart ----"
 		puts
-		@orders.each{|o| puts "#{o.quantity} - #{o.product.to_s} "}
+		@orders.each{|o| puts "ID:#{o.id} - Quantity: #{o.quantity} - Product: #{o.product.title} $#{o.product.price}  Sub-total: $ #{o.sub_total()} "}
 		puts
 		puts "Total: $"+ total_price().to_s
 		puts

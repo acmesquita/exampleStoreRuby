@@ -9,10 +9,14 @@ class Order
 	attr_accessor :quantity, :product, :id
 
 	def to_s
-		@product.to_s + " - " + @quantity.to_s
+		"ID:" + @id.to_s + " - Product:" +@product.titulo + " - Quantity:" + @quantity.to_s
 	end
 
 	def add_quantity(quantity = 1)
-		@quantity += quantity;
+		@quantity = quantity;
+	end
+
+	def sub_total()
+		@product.price * @quantity
 	end
 end

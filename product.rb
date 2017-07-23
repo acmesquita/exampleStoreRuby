@@ -9,13 +9,15 @@ class Product
 	end
 
 	def to_s
-		"#"+ @id.to_s + " " + @title + " - $" + @price.to_s
+		"ID:"+ @id.to_s + " Product:" + @title + " - $" + @price.to_s
 	end
 
 	attr_accessor :title, :price, :id
 
 	def self.create
 		system("clear")
+		puts "---- Create Product ----"
+		puts
 		title = ask "Please, enter for title for product."
 		price = ask "Please, how a price?", Float
 

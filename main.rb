@@ -13,11 +13,13 @@ loop do
 
 choose do |menu|
 	system("clear")
-	puts "-------- Store Cosme's --------"
+	puts "-------- Store --------"
 	puts
   menu.prompt = "Choose an option:"
   menu.choice(:client) { 
   	system("clear")
+  	puts "-------- Store --------"
+	puts
   	choose do |menu|
 	  menu.prompt = "Hello Client, Choose an option:"
 	  menu.choice(:find_product) {
@@ -63,6 +65,27 @@ choose do |menu|
 	  								
 	  								choose do |menu|
 	  									menu.prompt = "Choose an option:"
+	  									menu.choice(:remove_order){
+	  										system("clear")
+	  										cart.show
+	  										id = ask "Choose an product, informe the id order:"
+	  										system("clear")
+	  										order = orders.select{ |order| order.id == id.to_i}.first
+	  										answer = ask("Are you sure?  ") { |q| q.default = "yes" }
+	  										if answer == "yes"
+	  											orders.delete(order)
+	  											cart.orders.delete(order)
+	  										end
+	  										
+	  									}
+	  									menu.choice(:chance_quantity){
+	  										system("clear")
+	  										cart.show
+	  										id = ask "Choose an product, informe the id order:"
+	  										order = orders.select{ |order| order.id == id.to_i}.first
+	  										answer = ask "Informe an quantity:"
+	  										order.add_quantity(answer.to_i)
+	  									}
 	  									menu.choice(:finalizar){
 	  										system("clear")
 	  										cart.show
@@ -78,6 +101,8 @@ choose do |menu|
   }
   menu.choice(:manager) {
   	system("clear")
+  	puts "-------- Store --------"
+	puts
   	choose do |menu|
 	  menu.prompt = "Hello Manager, Choose an option:"
 	  menu.choice(:create_product) { product = Product.create
@@ -93,6 +118,8 @@ choose do |menu|
 	  								}
 	  menu.choice(:find_product) {
 	  								system("clear")
+	  								puts "---- Find Products ----"
+	  								puts
 	  								answer = ask "Find by title" 
 	  								puts "---- List Products ----"
 	  								puts
