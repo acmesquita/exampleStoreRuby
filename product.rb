@@ -1,3 +1,5 @@
+require 'highline/import'
+
 class Product
 
 	def initialize (options = {})
@@ -7,7 +9,18 @@ class Product
 	end
 
 	def to_s
-		@title + " - $" + @price.to_s
+		"#"+@id +" "+@title + " - $" + @price.to_s
 	end
-	attr_accessor :title, :price. :id
+	attr_accessor :title, :price, :id
+
+	def self.create
+		system("clear")
+		title = ask "Please, enter for title for product."
+		price = ask "Please, how a price?", Float
+
+		say("Product create successfully.")
+		Product.new({title: title, price: price})
+	end
+
+	
 end
