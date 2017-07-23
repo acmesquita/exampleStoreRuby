@@ -20,7 +20,7 @@ choose do |menu|
 	  menu.prompt = "Hello Client, choose an option:"
 	  menu.choice(:list_products) { system("clear")
 	  								puts "---- List Products ----"
-	  								products.each{|p| puts "#{p.to_s}"}
+	  								products.each{|product| puts "#{p.to_s}"}
 	  								ask "return?" }
 	  menu.choice(:buy) { say("Build...") }
 	  menu.choice(:go_to_your_cart) { say("Build...") }
@@ -41,7 +41,13 @@ choose do |menu|
 	  								 answer = ask "who id?" 
 	  								 products.delete_if{|product| product.id = answer}
 	  								}
-	  menu.choice(:find_product) { say("find product") }
+	  menu.choice(:find_product) {
+	  								system("clear")
+	  								answer = ask "Title?" 
+	  								puts "---- List Products ----"
+	  								products.select{ |product|  product.name.include? answer}.each{|p| puts "#{p.to_s}"}
+	  								
+	  							 }
 	  menu.default = :find_product
 	end
   }
