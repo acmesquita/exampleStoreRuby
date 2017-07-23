@@ -13,29 +13,34 @@ loop do
 
 choose do |menu|
 	system("clear")
-  menu.prompt = "Hello, ? "
+  menu.prompt = "Choose an option:"
   menu.choice(:client) { 
   	system("clear")
   	choose do |menu|
-	  menu.prompt = "Hello Client, choose an option"
-	  menu.choice(:list_products) { 
-	  								choose do |menu|
-	  									menu.prompt = "Choose an product"
-	  									menu.choices(products){say("p")}
-	  								end
-	  							 }
-	  menu.choice(:buy) { say("Not from around here, are you?") }
-	  menu.choice(:go_to_your_cart) { say("Not from around here, are you?") }
+	  menu.prompt = "Hello Client, choose an option:"
+	  menu.choice(:list_products) { system("clear")
+	  								puts "---- List Products ----"
+	  								products.each{|p| puts "#{p.to_s}"}
+	  								ask "return?" }
+	  menu.choice(:buy) { say("Build...") }
+	  menu.choice(:go_to_your_cart) { say("Build...") }
 	  menu.default = :client
 	end
   }
   menu.choice(:manager) {
   	system("clear")
   	choose do |menu|
-	  menu.prompt = "Hello Manager, choose an option"
+	  menu.prompt = "Hello Manager, choose an option:"
 	  menu.choice(:create_product) { product = Product.create
-	  								 products << product }
-	  menu.choice(:delete_product) { say("delete product") }
+	  								 products << product
+	  								 product.id = products.length
+	  							   }
+	  menu.choice(:delete_product) { system("clear")
+	  								 puts "---- List Products ----"
+	  								 products.each{|p| puts "#{p.to_s}"}
+	  								 answer = ask "who id?" 
+	  								 products.delete_if{|product| product.id = answer}
+	  								}
 	  menu.choice(:find_product) { say("find product") }
 	  menu.default = :find_product
 	end
