@@ -1,14 +1,18 @@
 class Cart
 
-	def initialize (options = [])
+	def initialize (options = {})
 		@id = options[:id]
 		@orders = []
 	end
 	attr_accessor :orders
 
 	def show
-		@orders.each{|o| puts "#{o.quantity} - #{o.product}"}
-		puts "Total: $#{total_price()}"
+		puts "---- My Cart ----"
+		puts
+		@orders.each{|o| puts "#{o.quantity} - #{o.product.to_s} "}
+		puts
+		puts "Total: $"+ total_price().to_s
+		puts
 	end
 
 	def add(order)

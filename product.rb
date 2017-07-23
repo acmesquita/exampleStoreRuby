@@ -11,6 +11,7 @@ class Product
 	def to_s
 		"#"+ @id.to_s + " " + @title + " - $" + @price.to_s
 	end
+
 	attr_accessor :title, :price, :id
 
 	def self.create

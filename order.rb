@@ -6,7 +6,7 @@ class Order
 		@quantity = options[:quantity].to_i
 	end
 
-	attr_accessor :quantity, :product
+	attr_accessor :quantity, :product, :id
 
 	def to_s
 		@product.to_s + " - " + @quantity.to_s
